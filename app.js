@@ -1,27 +1,34 @@
 // d3.json("samples.json", function(data) {
 //     console.log(data.names);
 // });
+var gdata
+d3.json("samples.json").then(function(data){
 
-let data = d3.json("samples.json").then(function(data){
-    var attempt = Object.values(data.samples);
-    var attempt2 = Object.values(attempt[0].sample_values);
-    var labels = Object.values(attempt[0].otu_ids);
-    var labelsotu = Object.values(attempt[0].otu_labels);
+    gdata = data
+    var attempt = data.samples[0];
+    var attempt2 = attempt.sample_values;
+    var labels = attempt.otu_ids;
+    // var labelsotu = attempt.otu_labels;
+    console.log(attempt2)
+    console.log(attempt)
 
     //     // Sort the data by Greek search results descending
-    // sorted = data.sort((a, b) => b.attempt[0].sample_values - a.attempt[0].sample_values);
+    // let sorted = gdata.sort((a, b) => b.attempt.sample_values - a.attempt.sample_values);
 
-    // // Slice the first 10 objects for plotting
-    // slicedData = sorted.slice(0, 10);
+    // Slice the first 10 objects for plotting
+    slicedData = attempt2.slice(0, 10);
+    slicedLabels = labels.slice(0,10);
+    slicedLabels = slicedLabels.map(L => "otu" + L)
+    
 
-    // // Reverse the array to accommodate Plotly's defaults
-    // reversedData = slicedData.reverse();
+    // Reverse the array to accommodate Plotly's defaults
+    slicedData.reverse();
 
     // // Trace1 for the OTU Data
     let trace1 = {
-        x: attempt2,
-        y: labels,
-        text: labelsotu,
+        x: slicedData,
+        y: slicedLabels,
+        // text: labelsotu,
         name: "OTU Data",
         type: "bar",
         orientation: "h"
@@ -33,35 +40,3 @@ let data = d3.json("samples.json").then(function(data){
   Plotly.newPlot("bar", traceData);
 
 });
-// let dataOTU = d3.json("samples.json").then(function(data){ console.log(data)});
-
-// var samplesOTU = d3.json("samples.json").then(function(data){
-//     console.log(data.samples)
-// });
-
-// var d2 = Object.values()
-// console.log(samplesOTU[sample_values]);
-
-
-
-
-
-
-
-
-// var uk = Object.values(data.uk);
-// var otuvalues = Object.values(samplesOTU.sample_values);
-// console.log(otuvalues);
-// console.log(samplesOTU[0][sample_values])
-
-// Create an array of music provider labels
-// var labels = Object.keys(data.us);
-
-// // Sort the data by OTU results descending
-// let sortedByOTU = samplesOTU.sort((a, b) => b.sample_values - a.sample_values);
-
-// // Slice the first 10 objects for plotting
-// slicedData = sortedByOTU.slice(0, 10);
-
-// // Reverse the array to accommodate Plotly's defaults
-// reversedData = slicedData.reverse();
