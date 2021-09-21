@@ -1,4 +1,5 @@
 var gdata
+// Create Bar Chart
 function barChart(x){
 d3.json("samples.json").then(function(data){
 
@@ -39,18 +40,9 @@ d3.json("samples.json").then(function(data){
 }
 //   Bubble Chart
 
-    // for (var i = 0; i < attempt.length; i++){
-    //         if (attempt[i].otu_id < 3500){
-    //             colorsbubble = "Blues" 
-    //         } else if (attempt[i].otu_id < 1500){
-    //             colorsbubble = "Greens" 
-    //         } else {
-    //             colorsbubble = "Reds"
-    //         }
     function bubbleChart(x){
         d3.json("samples.json").then(function(data){
     gdata = data
-    // console.log(gdata)
     g = gdata.samples
     var attempt = g.filter(m => m.id == x)[0]
     var attempt2 = attempt.sample_values;
@@ -72,8 +64,6 @@ d3.json("samples.json").then(function(data){
     let bubbledata = [trace2];
     
     var layout = {
-        // title: 'Marker Size and Color',
-        // showlegend: true,
         height: 600,
         width: 600
     };
@@ -81,22 +71,22 @@ d3.json("samples.json").then(function(data){
     Plotly.newPlot('bubble', bubbledata, layout);
         })
     }
-function Metadata(sample) {
-  d3.json("samples.json").then((data) => {
-    var metadata= data.metadata;
-    var array= metadata.filter(samplevalue => samplevalue.id == sample);
-    var result= array[0]
-    var selectsample = d3.select("#sample-metadata");
-    selectsample.html("");
-    Object.entries(result).forEach(([key, value]) => {
-    selectsample.append("h5").text(`${key}: ${value}`);
+//      Demographic Box
+    function Metadata(sample) {
+    d3.json("samples.json").then((data) => {
+        var metadata= data.metadata;
+        var array= metadata.filter(samplevalue => samplevalue.id == sample);
+        var result= array[0]
+        var selectsample = d3.select("#sample-metadata");
+        selectsample.html("");
+        Object.entries(result).forEach(([key, value]) => {
+        selectsample.append("h5").text(`${key}: ${value}`);
   });
 });
 }
 
 
-
-    // Display box id options here
+    // Display box ID options here
 
     function init() {
         // Creating the dropdown element using the proper ID
@@ -122,16 +112,6 @@ function Metadata(sample) {
         bubbleChart(newSample);
         Metadata(newSample)
 
-        // function({
-
-        // })
       }
       // Initializing
       init();
-
-
-    // };
-
-    // g = gdata.samples
-    // otuid = "943"
-    // g.filter(m => m.id == otuid)
