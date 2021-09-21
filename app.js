@@ -1,21 +1,17 @@
-// d3.json("samples.json", function(data) {
-//     console.log(data.names);
-// });
 var gdata
+function barChart(x){
 d3.json("samples.json").then(function(data){
 
     gdata = data
-    var attempt = data.samples[0];
+    g = gdata.samples
+    var attempt = g.filter(m => m.id == x)[0]
+    // var attempt = data.samples[0];
     var attempt2 = attempt.sample_values;
     var labels = attempt.otu_ids;
     var labelsotu = attempt.otu_labels;
     console.log(attempt2)
     console.log(attempt)
     console.log(labels)
-    // console.log(gdata)
-
-    //     // Sort the data by Greek search results descending
-    // let sorted = gdata.sort((a, b) => b.attempt.sample_values - a.attempt.sample_values);
 
     // Slice the first 10 objects for plotting
     slicedData = attempt2.slice(0, 10);
@@ -40,7 +36,8 @@ d3.json("samples.json").then(function(data){
   
   // Note that we use `traceData` here, not `data`
   Plotly.newPlot("bar", traceData);
-
+    });
+}
 //   Bubble Chart
 
     // for (var i = 0; i < attempt.length; i++){
@@ -51,7 +48,7 @@ d3.json("samples.json").then(function(data){
     //         } else {
     //             colorsbubble = "Reds"
     //         }
-
+    function bubbleChart(x){
     var trace2 = {
         x: labels,
         y: attempt2,
@@ -77,9 +74,40 @@ d3.json("samples.json").then(function(data){
     
     Plotly.newPlot('bubble', bubbledata, layout);
 
-// };
+    };
+    // Display box id options here
 
-    });
+    function init() {
+        // Creating the dropdown element using the proper ID
+        var menu = d3.select("#selDataset");
+        // Creating the select options
+        d3.json("samples.json").then((data) => {
+          var DataNames = data.names;
+          DataNames.forEach((sample) => {
+            menu
+              .append("option")
+              .text(sample)
+          });
+          // Building the initial data display with index 0
+          const Sample = DataNames[0];
+          barChart(Sample);
+          bubbleChart(Sample);
+        });
+      }
+      function optionChanged(newSample) {
+        // Retrieve new data every time a new sample is chosen
+        barChart(newSample);
+        bubbleChart(newSample);
+
+        // function({
+
+        // })
+      }
+      // Initializing
+      init();
+
+
+    // };
 
     // g = gdata.samples
     // otuid = "943"
