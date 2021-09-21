@@ -16,7 +16,7 @@ d3.json("samples.json").then(function(data){
     // Slice the first 10 objects for plotting
     slicedData = attempt2.slice(0, 10);
     slicedLabels = labels.slice(0,10);
-    slicedLabels = slicedLabels.map(L => "otu" + L)
+    slicedLabels = slicedLabels.map(L => "OTU" + L)
     
     // Reverse the array to accommodate Plotly's defaults
     slicedData.reverse();
@@ -45,19 +45,19 @@ d3.json("samples.json").then(function(data){
     gdata = data
     g = gdata.samples
     var attempt = g.filter(m => m.id == x)[0]
-    var attempt2 = attempt.sample_values;
-    var labels = attempt.otu_ids;
+    var sampleValues = attempt.sample_values;
+    var otuIDs = attempt.otu_ids;
     var labelsotu = attempt.otu_labels;
 
     var trace2 = {
-        x: labels,
-        y: attempt2,
+        x: otuIDs,
+        y: sampleValues,
         mode: 'markers',
         text: labelsotu,
         marker: {
-        color: labels,
+        color: otuIDs,
         opacity: [1, 0.8, 0.6, 0.4],
-        size: attempt2
+        size: sampleValues
         }
     };
     
