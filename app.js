@@ -11,6 +11,8 @@ d3.json("samples.json").then(function(data){
     var labelsotu = attempt.otu_labels;
     console.log(attempt2)
     console.log(attempt)
+    console.log(labels)
+    // console.log(gdata)
 
     //     // Sort the data by Greek search results descending
     // let sorted = gdata.sort((a, b) => b.attempt.sample_values - a.attempt.sample_values);
@@ -41,42 +43,44 @@ d3.json("samples.json").then(function(data){
 
 //   Bubble Chart
 
-// gdata.forEach(function(gdata){
-//         if (labels < 3500){
-//             colorsbubble = "browns" 
-//         } else if (labels < 1500){
-//             colorsbubble = "greens" 
-//         } else {
-//             colorsbubble = "blues"
-//         }
-  var trace2 = {
-    x: labels,
-    y: attempt2,
-    mode: 'markers',
-    marker: {
-      color: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
-      colorscale: "Greens",
-    //   colorscale: colorsbubble,
-      opacity: [1, 0.8, 0.6, 0.4],
-      size: attempt2
-    }
-  };
-  
-  let bubbledata = [trace2];
-  
-  var layout = {
-    // title: 'Marker Size and Color',
-    // showlegend: true,
-    height: 600,
-    width: 600
-  };
-  
-  Plotly.newPlot('bubble', bubbledata, layout);
-// })
-});
+    // for (var i = 0; i < attempt.length; i++){
+    //         if (attempt[i].otu_id < 3500){
+    //             colorsbubble = "Blues" 
+    //         } else if (attempt[i].otu_id < 1500){
+    //             colorsbubble = "Greens" 
+    //         } else {
+    //             colorsbubble = "Reds"
+    //         }
 
-// g = gdata.samples
-// otuid = "943"
-// g.filter(m => m.id == otuid)
+    var trace2 = {
+        x: labels,
+        y: attempt2,
+        mode: 'markers',
+        marker: {
+        color: labels,
+        // color: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+        //   colorscale: "Blues",
+        // colorscale: colorsbubble,
+        opacity: [1, 0.8, 0.6, 0.4],
+        size: attempt2
+        }
+    };
+    
+    let bubbledata = [trace2];
+    
+    var layout = {
+        // title: 'Marker Size and Color',
+        // showlegend: true,
+        height: 600,
+        width: 600
+    };
+    
+    Plotly.newPlot('bubble', bubbledata, layout);
 
+// };
 
+    });
+
+    // g = gdata.samples
+    // otuid = "943"
+    // g.filter(m => m.id == otuid)
