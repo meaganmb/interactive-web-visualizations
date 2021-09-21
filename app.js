@@ -5,7 +5,6 @@ d3.json("samples.json").then(function(data){
     gdata = data
     g = gdata.samples
     var attempt = g.filter(m => m.id == x)[0]
-    // var attempt = data.samples[0];
     var attempt2 = attempt.sample_values;
     var labels = attempt.otu_ids;
     var labelsotu = attempt.otu_labels;
@@ -18,7 +17,6 @@ d3.json("samples.json").then(function(data){
     slicedLabels = labels.slice(0,10);
     slicedLabels = slicedLabels.map(L => "otu" + L)
     
-
     // Reverse the array to accommodate Plotly's defaults
     slicedData.reverse();
 
@@ -50,10 +48,20 @@ d3.json("samples.json").then(function(data){
     //             colorsbubble = "Reds"
     //         }
     function bubbleChart(x){
+        d3.json("samples.json").then(function(data){
+    gdata = data
+    // console.log(gdata)
+    g = gdata.samples
+    var attempt = g.filter(m => m.id == x)[0]
+    var attempt2 = attempt.sample_values;
+    var labels = attempt.otu_ids;
+    var labelsotu = attempt.otu_labels;
+
     var trace2 = {
         x: labels,
         y: attempt2,
         mode: 'markers',
+        text: labelsotu,
         marker: {
         color: labels,
         opacity: [1, 0.8, 0.6, 0.4],
@@ -71,8 +79,23 @@ d3.json("samples.json").then(function(data){
     };
     
     Plotly.newPlot('bubble', bubbledata, layout);
+        })
+    }
+function Metadata(sample) {
+  d3.json("samples.json").then((data) => {
+    var metadata= data.metadata;
+    var array= metadata.filter(samplevalue => samplevalue.id == sample);
+    var result= array[0]
+    var selectsample = d3.select("#sample-metadata");
+    selectsample.html("");
+    Object.entries(result).forEach(([key, value]) => {
+    selectsample.append("h5").text(`${key}: ${value}`);
+  });
+});
+}
 
-    };
+
+
     // Display box id options here
 
     function init() {
@@ -90,12 +113,14 @@ d3.json("samples.json").then(function(data){
           const Sample = DataNames[0];
           barChart(Sample);
           bubbleChart(Sample);
+          Metadata(Sample)
         });
       }
       function optionChanged(newSample) {
         // Retrieve new data every time a new sample is chosen
         barChart(newSample);
         bubbleChart(newSample);
+        Metadata(newSample)
 
         // function({
 
