@@ -71,6 +71,8 @@ d3.json("samples.json").then(function(data){
     Plotly.newPlot('bubble', bubbledata, layout);
         })
     }
+
+
 //      Demographic Box
     function Metadata(sample) {
     d3.json("samples.json").then((data) => {
